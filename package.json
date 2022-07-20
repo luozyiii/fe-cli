@@ -1,0 +1,36 @@
+{
+  "name": "fe-cli",
+  "version": "0.0.1",
+  "description": "搭建适合自己的脚手架：实现项目初始化和项目自动化发布两大核心功能。",
+  "main": "./core/index.js",
+  "bin": {
+    "fe": "./core/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luozyiii/fe-cli.git"
+  },
+  "keywords": [
+    "fe-cli"
+  ],
+  "author": "leslie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luozyiii/fe-cli/issues"
+  },
+  "homepage": "https://github.com/luozyiii/fe-cli#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^9.4.0",
+    "fs-extra": "^10.1.0",
+    "import-local": "^3.1.0",
+    "npmlog": "^6.0.2",
+    "path-exists": "^5.0.0",
+    "root-check": "^2.0.0",
+    "semver": "^7.3.7",
+    "user-home": "^3.0.0"
+  }
+}
