@@ -1,5 +1,3 @@
-'use strict';
-
 const axios = require('axios');
 import urlJoin from 'url-join';
 const semver = require('semver');

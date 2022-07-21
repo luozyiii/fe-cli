@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 import { homedir } from 'os';
 import rootCheck from 'root-check';
@@ -142,7 +140,7 @@ function registerCommand() {
     });
 
   // 开启 debug 模式
-  program.on('option:debug', function () {
+  program.on('option:debug', () => {
     if (program.opts().debug) {
       process.env.LOG_LEVEL = 'verbose';
     } else {
@@ -153,12 +151,12 @@ function registerCommand() {
   });
 
   // 指定targetPath
-  program.on('option:targetPath', function () {
+  program.on('option:targetPath', () => {
     process.env.CLI_TARGET_PATH = program.opts().targetPath;
   });
 
   // 对未知命令的监听
-  program.on('command:*', function (obj) {
+  program.on('command:*', (obj) => {
     console.error('未知的命令:', obj[0]);
     const availableCommmands = program.commands.map((cmd) => cmd.name());
     if (availableCommmands.length > 0) {
