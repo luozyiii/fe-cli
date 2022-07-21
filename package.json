@@ -10,8 +10,7 @@
     "dev": "rm -rf lib && rollup -wc rollup.dev.config.js",
     "build": "rm -rf lib && rollup -c rollup.config.js",
     "prepare": "husky install",
-    "lint": "lint-staged",
-    "test": "npm run dev"
+    "lint": "lint-staged"
   },
   "repository": {
     "type": "git",
