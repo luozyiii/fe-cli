@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "rollup": "^2.77.0",
@@ -51,7 +53,7 @@
   },
   "lint-staged": {
     "src/**/*.(js|ts)": [
-      "prettier --write"
+      "npx prettier --write"
     ]
   },
   "files": [
