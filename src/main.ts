@@ -1,18 +1,18 @@
-"use strict";
+'use strict';
 
-const path = require("path");
-import rootCheck from "root-check";
-import { homedir } from "os";
-const fs = require("fs");
-const fse = require("fs-extra");
-const pathExists = require("path-exists");
-const colors = require("colors");
-const pkg = require("../package.json");
-const semver = require("semver");
-const commander = require("commander");
-import log from "./utils/log";
-import { getNpmSemverVersion } from "./utils/npm";
-import { DEFAULT_HOME, DEPENDENCIES_PATH } from "./constant/index";
+const path = require('path');
+import { homedir } from 'os';
+import rootCheck from 'root-check';
+import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
+import log from './utils/log';
+import { getNpmSemverVersion } from './utils/npm';
+const fs = require('fs');
+const fse = require('fs-extra');
+const pathExists = require('path-exists');
+const colors = require('colors');
+const pkg = require('../package.json');
+const semver = require('semver');
+const commander = require('commander');
 
 const program = new commander.Command();
 const userHome = homedir();
@@ -22,10 +22,10 @@ async function main() {
     // 启动前阶段
     await prepare();
     // 注册指令
-    // registerCommand();
+    registerCommand();
   } catch (e) {
     log.error(e.message);
-    if (process.env.LOG_LEVEL === "verbose") {
+    if (process.env.LOG_LEVEL === 'verbose') {
       console.log(e);
     }
   }
@@ -51,14 +51,14 @@ function checkRoot() {
 // 用户主目录检查功能
 const checkUserHome = async () => {
   if (!userHome || !(await pathExists(userHome))) {
-    throw new Error(colors.red("当前登录用户主目录不存在!"));
+    throw new Error(colors.red('当前登录用户主目录不存在!'));
   }
 };
 
 // 环境变量检查
 const checkEnv = async () => {
-  const dotenv = require("dotenv");
-  const dotenvPath = path.resolve(userHome, ".env");
+  const dotenv = require('dotenv');
+  const dotenvPath = path.resolve(userHome, '.env');
   if (await pathExists(dotenvPath)) {
     dotenv.config({
       path: dotenvPath,
@@ -73,11 +73,11 @@ function createDefaultConfig() {
     home: userHome,
   };
   if (process.env.CLI_HOME) {
-    cliConfig["cliHome"] = path.join(userHome, process.env.CLI_HOME);
+    cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME);
   } else {
-    cliConfig["cliHome"] = path.join(userHome, DEFAULT_HOME);
+    cliConfig['cliHome'] = path.join(userHome, DEFAULT_HOME);
   }
-  process.env.CLI_HOME_PATH = cliConfig["cliHome"];
+  process.env.CLI_HOME_PATH = cliConfig['cliHome'];
 }
 
 async function checkGlobalUpdate() {
@@ -94,10 +94,10 @@ async function checkGlobalUpdate() {
     log.warn(
       colors.yellow(`更新提示: 请手动更新
       当前版本: v${curVersion}, 最新版本:v${lastVersion}
-      更新命令: npm install -g ${npmName}`)
+      更新命令: npm install -g ${npmName}`),
     );
   } else {
-    log.info("当前已经是最新版本！！！无须更新");
+    log.info('当前已经是最新版本！！！无须更新');
   }
 }
 
@@ -105,39 +105,36 @@ async function checkGlobalUpdate() {
 function registerCommand() {
   program
     .name(Object.keys(pkg.bin)[0])
-    .usage("<command> [options]")
+    .usage('<command> [options]')
     .version(pkg.version)
-    .option("-d, --debug", "是否开启调试模式", false)
-    .option("-tp, --targetPath <targetPath>", "是否指定本地调试文件路径", "");
+    .option('-d, --debug', '是否开启调试模式', false)
+    .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
   // 注册 init 命令
   program
-    .command("init [projectName]")
-    .option("-f, --force", "是否强制初始化项目")
+    .command('init [projectName]')
+    .option('-f, --force', '是否强制初始化项目')
     .action(() => {
-      console.log("开始初始化...");
+      console.log('开始初始化...');
     });
 
   // 注册 clear 命令
   program
-    .command("clear")
-    .description("清空缓存文件")
-    .option("-a, --all", "清空全部")
-    .option("-d, --dep", "清空依赖文件")
+    .command('clear')
+    .description('清空缓存文件')
+    .option('-a, --all', '清空全部')
+    .option('-d, --dep', '清空依赖文件')
     .action((options: any) => {
-      log.notice("开始清空缓存文件");
+      log.notice('开始清空缓存文件');
       if (options.all) {
         // cleanAll();
       } else if (options.dep) {
-        const depPath = path.resolve(
-          process.env.CLI_HOME_PATH,
-          DEPENDENCIES_PATH
-        );
+        const depPath = path.resolve(process.env.CLI_HOME_PATH, DEPENDENCIES_PATH);
         if (fs.existsSync(depPath)) {
           fse.emptyDirSync(depPath);
-          log.success("清空依赖文件成功", depPath);
+          log.success('清空依赖文件成功', depPath);
         } else {
-          log.success("文件夹不存在", depPath);
+          log.success('文件夹不存在', depPath);
         }
       } else {
         // cleanAll();
@@ -145,27 +142,27 @@ function registerCommand() {
     });
 
   // 开启 debug 模式
-  program.on("option:debug", function () {
+  program.on('option:debug', function () {
     if (program.opts().debug) {
-      process.env.LOG_LEVEL = "verbose";
+      process.env.LOG_LEVEL = 'verbose';
     } else {
-      process.env.LOG_LEVEL = "info";
+      process.env.LOG_LEVEL = 'info';
     }
     log.level = process.env.LOG_LEVEL;
-    log.verbose("debug", "打开调试模式");
+    log.verbose('debug', '打开调试模式');
   });
 
   // 指定targetPath
-  program.on("option:targetPath", function () {
+  program.on('option:targetPath', function () {
     process.env.CLI_TARGET_PATH = program.opts().targetPath;
   });
 
   // 对未知命令的监听
-  program.on("command:*", function (obj) {
-    console.error("未知的命令:", obj[0]);
+  program.on('command:*', function (obj) {
+    console.error('未知的命令:', obj[0]);
     const availableCommmands = program.commands.map((cmd) => cmd.name());
     if (availableCommmands.length > 0) {
-      console.log("可用命令:", availableCommmands.join(","));
+      console.log('可用命令:', availableCommmands.join(','));
     }
   });
 
@@ -173,7 +170,7 @@ function registerCommand() {
 
   if (program.args && program.args.length < 1) {
     program.outputHelp();
-    console.log("");
+    console.log('');
   }
 }
 
