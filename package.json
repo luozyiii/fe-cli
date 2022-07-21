@@ -1,6 +1,6 @@
 {
   "name": "@leslies/fe-cli",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "搭建适合自己的脚手架：实现项目初始化和项目自动化发布两大核心功能。",
   "main": "index.js",
   "bin": {
@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "rm -rf lib && rollup -wc rollup.dev.config.js",
     "build": "rm -rf lib && rollup -c rollup.config.js",
+    "release": "npm run build && npm publish",
     "prepare": "husky install",
     "lint": "lint-staged"
   },
