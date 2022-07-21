@@ -2,4 +2,4 @@
 
 搭建适合自己的脚手架：实现项目初始化和项目自动化发布两大核心功能。
 
-## TS + rollup
+## ts + rollup + prettierrc + husky + commitlint
