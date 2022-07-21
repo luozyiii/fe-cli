@@ -1,7 +1,7 @@
 "use strict";
 
-const pkg = require("../../package.json");
-const { log } = require("../../utils/index");
+const pkg = require("../package.json");
+import { log } from "./utils/index";
 
 async function core() {
   try {
@@ -31,4 +31,4 @@ function checkRoot() {
   // rootCheck();
 }
 
-module.exports = core;
+export default core;
