@@ -16,7 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/luozyiii/fe-cli.git"
   },
-  "keywords": [],
+  "keywords": [
+    "fe-cli"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
