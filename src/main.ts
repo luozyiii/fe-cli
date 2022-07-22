@@ -94,8 +94,6 @@ async function checkGlobalUpdate() {
       当前版本: v${curVersion}, 最新版本:v${lastVersion}
       更新命令: npm install -g ${npmName}`),
     );
-  } else {
-    log.info('当前已经是最新版本！！！无须更新');
   }
 }
 
