@@ -1,12 +1,12 @@
 const path = require('path');
 import { homedir } from 'os';
+import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
 import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
 import log from './utils/log';
 import { getNpmSemverVersion } from './utils/npm';
 const fs = require('fs');
 const fse = require('fs-extra');
-const pathExists = require('path-exists');
 const colors = require('colors');
 const pkg = require('../package.json');
 const semver = require('semver');
@@ -155,10 +155,10 @@ function registerCommand() {
 
   // 对未知命令的监听
   program.on('command:*', (obj) => {
-    console.error('未知的命令:', obj[0]);
+    log.notice(`无效命令: ${obj[0]}`);
     const availableCommmands = program.commands.map((cmd) => cmd.name());
     if (availableCommmands.length > 0) {
-      console.log('可用命令:', availableCommmands.join(','));
+      log.notice(`有效命令: ${availableCommmands.join('、')}`);
     }
   });
 

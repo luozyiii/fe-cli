@@ -1,30 +1,19 @@
-const path = require("path");
+const path = require('path');
 
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import babel from "rollup-plugin-babel";
-import typescript from "rollup-plugin-typescript2";
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
 
-const inputPath = path.resolve(__dirname, "./src/index.ts");
-const outputPath = path.resolve(__dirname, "./lib/index.js");
+const inputPath = path.resolve(__dirname, './src/index.ts');
+const outputPath = path.resolve(__dirname, './lib/index.js');
 export default {
   input: inputPath,
   output: [
     {
       file: outputPath,
-      format: "cjs",
+      format: 'cjs',
     },
   ],
-  plugins: [
-    resolve(),
-    babel({
-      exclude: "node_modules/**",
-    }),
-    commonjs(),
-    typescript({
-      exclude: "node_modules/**",
-      typescript: require("typescript"),
-      useTsconfigDeclarationDir: true,
-    }),
-  ],
+  plugins: [resolve(), babel({ babelHelpers: 'bundled' }), commonjs(), typescript()],
 };
