@@ -1,5 +1,4 @@
 const path = require('path');
-
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -16,5 +15,11 @@ export default {
       format: 'cjs',
     },
   ],
-  plugins: [resolve(), babel({ babelHelpers: 'bundled' }), commonjs(), typescript(), json()],
+  plugins: [
+    resolve(),
+    babel({ babelHelpers: 'bundled' }),
+    commonjs(),
+    typescript({ compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es5' } }),
+    json(),
+  ],
 };

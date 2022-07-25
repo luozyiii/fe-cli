@@ -24,5 +24,12 @@ export default {
       format: 'cjs',
     },
   ],
-  plugins: [resolve(), babel({ babelHelpers: 'bundled' }), commonjs(), typescript(), json(), terser()],
+  plugins: [
+    resolve(),
+    babel({ babelHelpers: 'bundled' }),
+    commonjs(),
+    typescript({ compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es5' } }),
+    json(),
+    terser(),
+  ],
 };
