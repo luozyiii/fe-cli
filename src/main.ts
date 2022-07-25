@@ -3,8 +3,7 @@ import { homedir } from 'os';
 import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
 import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
-import log from './utils/log';
-import { getNpmSemverVersion } from './utils/npm';
+import { log, npm } from './utils';
 const fs = require('fs');
 const fse = require('fs-extra');
 const colors = require('colors');
@@ -87,7 +86,7 @@ async function checkGlobalUpdate() {
    */
   const curVersion = pkg.version;
   const npmName = pkg.name;
-  const lastVersion = await getNpmSemverVersion(curVersion, npmName);
+  const lastVersion = await npm.getNpmSemverVersion(curVersion, npmName);
   if (lastVersion && semver.gt(lastVersion, curVersion)) {
     log.warn(
       colors.yellow(`更新提示: 请手动更新

@@ -57,4 +57,4 @@ async function getNpmLatestVersion(npmName: string, registry: string) {
   return null;
 }
 
-export { getNpmInfo, getNpmVersions, getNpmSemverVersion, getDefaultRegistry, getNpmLatestVersion };
+export default { getNpmInfo, getNpmVersions, getNpmSemverVersion, getDefaultRegistry, getNpmLatestVersion };
