@@ -2,6 +2,7 @@ const path = require('path');
 import { homedir } from 'os';
 import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
+import create from './commands/create';
 import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
 import { log, npm } from './utils';
 const fs = require('fs');
@@ -102,15 +103,16 @@ function registerCommand() {
     .name(Object.keys(pkg.bin)[0])
     .usage('<command> [options]')
     .version(pkg.version)
-    .option('-d, --debug', '是否开启调试模式', false)
-    .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
+    .option('-d, --debug', '是否开启调试模式', false);
+  // .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
-  // 注册 init 命令
+  // 注册 create 命令
   program
-    .command('init [projectName]')
+    .command('create [projectName]')
     .option('-f, --force', '是否强制初始化项目')
-    .action(() => {
-      console.log('开始初始化...');
+    .action((projectName) => {
+      let opts = program.opts();
+      create(projectName, opts);
     });
 
   // 注册 clear 命令

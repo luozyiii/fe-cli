@@ -9,6 +9,7 @@ const request = axios.create({
 
 request.interceptors.response.use(
   (response) => {
+    console.log('response', response);
     if (response.status === 200) {
       return response.data;
     }
