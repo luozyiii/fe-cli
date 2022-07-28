@@ -1,6 +1,7 @@
 const path = require('path');
 const semver = require('semver');
 const colors = require('colors');
+const fs = require('fs');
 const fse = require('fs-extra');
 const axios = require('axios');
 const download = require('download-git-repo');
@@ -12,9 +13,8 @@ import { log } from '../utils';
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
-const TEMPLATE_TYPE_NORMAL = 'normal';
-const TEMPLATE_TYPE_CUSTOM = 'custom';
 
+// 模版选项数据处理
 function createTemplateChoice(template) {
   return template.map((item) => ({
     value: item.link,
@@ -30,42 +30,30 @@ function checkNodeVersion() {
   const curVersion = process.version;
   const lowestVersion = LOWEST_NODE_VERSION;
   if (!semver.gte(curVersion, lowestVersion)) {
-    throw new Error(colors.red(`fe create 需要安装 v${lowestVersion} 以上版本的 Node.js`));
+    throw new Error(colors.red(`fe create <projectName> 命令的使用，需要安装 v${lowestVersion} 以上版本的 Node.js`));
   }
 }
 
 async function prepare(options) {
   // 当前目录
   const localPath = path.join(process.cwd(), options.projectName);
-  console.log('localPath', localPath);
   // 目录存在，是否强制创建
   if (await pathExistsSync(localPath)) {
     let ifContinue = false;
     if (!options.force) {
-      // 1.1 是否继续创建
       ifContinue = (
         await inquirer.prompt({
           type: 'confirm',
           name: 'ifContinue',
           default: false,
-          message: '当前文件夹不为空，是否继续创建项目？',
+          message: '目录已存在，是否清空当前目录下的文件，继续创建项目？',
         })
       ).ifContinue;
-      if (!ifContinue) return;
+      if (!ifContinue) throw new Error('程序中断！');
     }
-
-    // 2、是否强制更新
-    if (ifContinue || options.force) {
-      // 给用户做二次确认
-      const { confirmDelete } = await inquirer.prompt({
-        type: 'confirm',
-        name: 'confirmDelete',
-        default: false,
-        message: '是否确认清空当前目录下的文件？',
-      });
-      // 清空当前目录
-      confirmDelete && fse.emptyDirSync(localPath);
-    }
+    fse.emptyDirSync(localPath);
+    fs.rmdirSync(localPath);
+    log.notice('目录清理完毕, 继续创建项目!');
   }
   return getProjectInfo(options);
 }
@@ -106,10 +94,6 @@ async function getProjectInfo(options) {
       },
     ],
   });
-  const newTemplate = options?.template.filter((template) => {
-    return template.tag.includes(type);
-  });
-  console.log('type', type);
   const title = type === TYPE_PROJECT ? '项目' : '组件/工具库';
   const projectNamePrompt = {
     type: 'input',
@@ -157,11 +141,17 @@ async function getProjectInfo(options) {
       }
     },
   });
+  const newTemplate = options?.template.filter((template) => {
+    return template.tag.includes(type);
+  });
+  if (!newTemplate || newTemplate.length === 0) {
+    throw new Error('该分类没有项目模板哈～');
+  }
   projectPrompt.push({
     type: 'list',
     name: 'projectLink',
     message: `请选择${title}模板`,
-    choices: createTemplateChoice(options.template),
+    choices: createTemplateChoice(newTemplate),
   });
   if (type === TYPE_PROJECT) {
     // 2、获取项目基本信息
@@ -215,7 +205,6 @@ const create = async (options: any) => {
     checkNodeVersion();
     // 2.拉取模板数据
     const template = await getProjectTemplate();
-    console.log('template', template);
     if (!template || template.length === 0) {
       throw new Error('项目模板不存在');
     }
@@ -224,17 +213,12 @@ const create = async (options: any) => {
       template,
       ...options,
     });
-    console.log('projectInfo', projectInfo);
     // 4.拉取git 仓库, 并删除仓库 .git
     download(`direct:${projectInfo.projectLink}`, projectInfo.projectName, { clone: true }, (err) => {
-      if (!err) {
-        log.success('自定义模板拉取成功');
-      } else {
-        log.error(err);
-      }
-      cmd.run(`rm -rf .git`, (err, data, stderr) => {
-        console.log('err', err);
-        console.log('examples dir now contains the example file along with : ', data);
+      log.success('模板拉取成功');
+      const localPath = path.join(process.cwd(), options.projectName);
+      cmd.run(`cd ${localPath} && rm -rf .git`, (err, data, stderr) => {
+        if (!err) log.notice('.git 文件跟踪已删除');
       });
     });
   } catch (error: any) {

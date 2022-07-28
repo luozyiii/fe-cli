@@ -3,7 +3,7 @@ import { homedir } from 'os';
 import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
 import createCommand from './commands/create';
-import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
+import { DEFAULT_HOME } from './constant/index';
 import { log, npm } from './utils';
 const fs = require('fs');
 const fse = require('fs-extra');
@@ -114,29 +114,6 @@ function registerCommand() {
       createCommand(opts);
     });
 
-  // 注册 clear 命令
-  program
-    .command('clear')
-    .description('清空缓存文件')
-    .option('-a, --all', '清空全部')
-    .option('-d, --dep', '清空依赖文件')
-    .action((options: any) => {
-      log.notice('开始清空缓存文件');
-      if (options.all) {
-        // cleanAll();
-      } else if (options.dep) {
-        const depPath = path.resolve(process.env.CLI_HOME_PATH, DEPENDENCIES_PATH);
-        if (fs.existsSync(depPath)) {
-          fse.emptyDirSync(depPath);
-          log.success('清空依赖文件成功', depPath);
-        } else {
-          log.success('文件夹不存在', depPath);
-        }
-      } else {
-        // cleanAll();
-      }
-    });
-
   // 开启 debug 模式
   program.on('option:debug', () => {
     if (program.opts().debug) {
@@ -146,11 +123,6 @@ function registerCommand() {
     }
     log.level = process.env.LOG_LEVEL;
     log.verbose('debug', '打开调试模式');
-  });
-
-  // 指定targetPath
-  program.on('option:targetPath', () => {
-    process.env.CLI_TARGET_PATH = program.opts().targetPath;
   });
 
   // 对未知命令的监听

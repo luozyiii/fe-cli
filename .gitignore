@@ -5,3 +5,6 @@ package-lock.json
 
 # build
 lib
+
+# mac
+.DS_Store
