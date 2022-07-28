@@ -25,7 +25,9 @@ export default {
     },
   ],
   plugins: [
-    resolve(),
+    resolve({
+      preferBuiltins: true,
+    }),
     babel({ babelHelpers: 'bundled' }),
     commonjs(),
     typescript({ compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es5' } }),

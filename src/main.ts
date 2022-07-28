@@ -2,7 +2,7 @@ const path = require('path');
 import { homedir } from 'os';
 import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
-import create from './commands/create';
+import createCommand from './commands/create';
 import { DEFAULT_HOME, DEPENDENCIES_PATH } from './constant/index';
 import { log, npm } from './utils';
 const fs = require('fs');
@@ -35,7 +35,7 @@ async function prepare() {
   checkRoot();
   checkUserHome();
   await checkEnv();
-  checkGlobalUpdate();
+  await checkGlobalUpdate();
 }
 
 // 检查版本号
@@ -104,15 +104,14 @@ function registerCommand() {
     .usage('<command> [options]')
     .version(pkg.version)
     .option('-d, --debug', '是否开启调试模式', false);
-  // .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
   // 注册 create 命令
   program
     .command('create [projectName]')
     .option('-f, --force', '是否强制初始化项目')
     .action((projectName) => {
-      let opts = program.opts();
-      create(projectName, opts);
+      let opts = { projectName, ...program.opts() };
+      createCommand(opts);
     });
 
   // 注册 clear 命令
