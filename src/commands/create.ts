@@ -3,6 +3,8 @@ const semver = require('semver');
 const colors = require('colors');
 const fse = require('fs-extra');
 const axios = require('axios');
+const download = require('download-git-repo');
+const cmd = require('node-cmd');
 import inquirer from 'inquirer';
 import { pathExistsSync } from 'path-exists';
 import { LOWEST_NODE_VERSION } from '../constant';
@@ -223,7 +225,18 @@ const create = async (options: any) => {
       ...options,
     });
     console.log('projectInfo', projectInfo);
-    // 4.拉取git 仓库
+    // 4.拉取git 仓库, 并删除仓库 .git
+    download(`direct:${projectInfo.projectLink}`, projectInfo.projectName, { clone: true }, (err) => {
+      if (!err) {
+        log.success('自定义模板拉取成功');
+      } else {
+        log.error(err);
+      }
+      cmd.run(`rm -rf .git`, (err, data, stderr) => {
+        console.log('err', err);
+        console.log('examples dir now contains the example file along with : ', data);
+      });
+    });
   } catch (error: any) {
     log.error(error.message);
   }
