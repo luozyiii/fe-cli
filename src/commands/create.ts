@@ -8,16 +8,13 @@ const download = require('download-git-repo');
 const cmd = require('node-cmd');
 import inquirer from 'inquirer';
 import { pathExistsSync } from 'path-exists';
-import { LOWEST_NODE_VERSION } from '../constant';
-import { log } from '../utils';
-
-const TYPE_PROJECT = 'project';
-const TYPE_COMPONENT = 'component';
+import { API_PATH, LOWEST_NODE_VERSION, TYPE_COMPONENT, TYPE_PROJECT } from '../common/constant';
+import { log, spinner } from '../utils';
 
 // 模版选项数据处理
 function createTemplateChoice(template) {
   return template.map((item) => ({
-    value: item.link,
+    value: item.url,
     name: item.name,
   }));
 }
@@ -60,8 +57,8 @@ async function prepare(options) {
 
 async function getProjectTemplate() {
   try {
-    const res = await axios.get('http://127.0.0.1:8080/project.json');
-    return res.data;
+    const { data } = await axios.get(`${API_PATH}/list`);
+    return data?.data;
   } catch (error) {
     return [];
   }
@@ -77,7 +74,7 @@ async function getProjectInfo(options) {
     isProjectNameValid = true;
     projectInfo.projectName = options.projectName;
   }
-  // 1、选择创建项目或组件/工具库
+  // 1、选择创建项目或组件
   const { type } = await inquirer.prompt({
     type: 'list',
     name: 'type',
@@ -89,12 +86,12 @@ async function getProjectInfo(options) {
         value: TYPE_PROJECT,
       },
       {
-        name: '组件/工具库',
+        name: '组件',
         value: TYPE_COMPONENT,
       },
     ],
   });
-  const title = type === TYPE_PROJECT ? '项目' : '组件/工具库';
+  const title = type === TYPE_PROJECT ? '项目' : '组件';
   const projectNamePrompt = {
     type: 'input',
     name: 'projectName',
@@ -142,7 +139,7 @@ async function getProjectInfo(options) {
     },
   });
   const newTemplate = options?.template.filter((template) => {
-    return template.tag.includes(type);
+    return template.type === type;
   });
   if (!newTemplate || newTemplate.length === 0) {
     throw new Error('该分类没有项目模板哈～');
@@ -162,16 +159,16 @@ async function getProjectInfo(options) {
       ...project,
     };
   } else if (type === TYPE_COMPONENT) {
-    // 组件/工具库基本信息
+    // 组件基本信息
     const descriptionPrompt = {
       type: 'input',
       name: 'componentDescription',
-      message: '请输入组件/工具库的描述信息',
+      message: '请输入组件的描述信息',
       validate: function (v) {
         let done = this.async();
         setTimeout(() => {
           if (!v) {
-            done('请输入组件/工具库的描述信息');
+            done('请输入组件的描述信息');
             return;
           }
           done(null, true);
@@ -179,7 +176,7 @@ async function getProjectInfo(options) {
       },
     };
     projectPrompt.push(descriptionPrompt);
-    // 2、获取组件/工具库基本信息
+    // 2、获取组件基本信息
     const component = await inquirer.prompt(projectPrompt);
     projectInfo = {
       ...projectInfo,
@@ -199,7 +196,7 @@ async function getProjectInfo(options) {
   return projectInfo;
 }
 
-const create = async (options: any) => {
+const createCommand = async (options: any) => {
   try {
     // 1.检查node版本
     checkNodeVersion();
@@ -214,9 +211,12 @@ const create = async (options: any) => {
       ...options,
     });
     // 4.拉取git 仓库, 并删除仓库 .git
+    const loadingSpinner = spinner('正在下载模版');
     download(`direct:${projectInfo.projectLink}`, projectInfo.projectName, { clone: true }, (err) => {
+      loadingSpinner.stop();
+      console.log('');
       log.success('模板拉取成功');
-      const localPath = path.join(process.cwd(), options.projectName);
+      const localPath = path.join(process.cwd(), projectInfo.projectName);
       cmd.run(`cd ${localPath} && rm -rf .git`, (err, data, stderr) => {
         if (!err) log.notice('.git 文件跟踪已删除');
       });
@@ -226,4 +226,4 @@ const create = async (options: any) => {
   }
 };
 
-export default create;
+export default createCommand;

@@ -1,0 +1,8 @@
+const DEFAULT_HOME = '.fe';
+const LOWEST_NODE_VERSION = '12.0.0';
+const API_PATH = 'http://112.74.201.142:7003';
+
+const TYPE_PROJECT = 'project';
+const TYPE_COMPONENT = 'component';
+
+export { DEFAULT_HOME, LOWEST_NODE_VERSION, API_PATH, TYPE_PROJECT, TYPE_COMPONENT };

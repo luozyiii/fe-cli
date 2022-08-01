@@ -1,4 +1,0 @@
-const DEFAULT_HOME = '.fe';
-const LOWEST_NODE_VERSION = '12.0.0';
-
-export { DEFAULT_HOME, LOWEST_NODE_VERSION };

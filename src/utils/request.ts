@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.BEST_CLI_BASE_URL ? process.env.BEST_CLI_BASE_URL : 'http://112.74.201.142:7002';
+const BASE_URL = process.env.BEST_CLI_BASE_URL ? process.env.BEST_CLI_BASE_URL : 'http://112.74.201.142:7003';
 
 const request = axios.create({
   baseURL: BASE_URL,

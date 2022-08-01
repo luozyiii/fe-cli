@@ -2,8 +2,9 @@ const path = require('path');
 import { homedir } from 'os';
 import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
+import addCommand from './commands/add';
 import createCommand from './commands/create';
-import { DEFAULT_HOME } from './constant/index';
+import { DEFAULT_HOME } from './common/constant';
 import { log, npm } from './utils';
 const fs = require('fs');
 const fse = require('fs-extra');
@@ -113,6 +114,11 @@ function registerCommand() {
       let opts = { projectName, ...program.opts() };
       createCommand(opts);
     });
+
+  // 注册 add 命令: 增加模版
+  program.command('add').action(() => {
+    addCommand();
+  });
 
   // 开启 debug 模式
   program.on('option:debug', () => {

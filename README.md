@@ -2,6 +2,19 @@
 
 搭建适合自己的脚手架：实现项目初始化和项目自动化发布两大核心功能。
 
+## 命令
+
+```bash
+# 安装
+npm install -g @leslies/fe-cli
+
+# 创建项目
+fe create test-project
+
+# 添加模版
+fe add
+```
+
 ## 目录结构
 
 ```bash
