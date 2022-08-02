@@ -4,6 +4,7 @@ import { pathExists } from 'path-exists';
 import rootCheck from 'root-check';
 import addCommand from './commands/add';
 import createCommand from './commands/create';
+import listCommand from './commands/list';
 import { DEFAULT_HOME } from './common/constant';
 import { log, npm } from './utils';
 const fs = require('fs');
@@ -118,6 +119,11 @@ function registerCommand() {
   // 注册 add 命令: 增加模版
   program.command('add').action(() => {
     addCommand();
+  });
+
+  // 注册 list 命令：查看已有模板
+  program.command('list').action(() => {
+    listCommand();
   });
 
   // 开启 debug 模式

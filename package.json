@@ -29,6 +29,7 @@
   "dependencies": {
     "@types/git-clone": "^0.2.0",
     "axios": "^0.27.2",
+    "cli-color": "^2.0.3",
     "colors": "^1.4.0",
     "commander": "^9.4.0",
     "dotenv": "^16.0.1",
