@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
-import { API_PATH, TYPE_COMPONENT, TYPE_PROJECT } from '../common/constant';
+import { API_PATH } from '../common/constant';
+import { projectType } from '../enum';
 import { log } from '../utils';
 
 const axios = require('axios');
@@ -9,19 +10,10 @@ async function prepare() {
     type: 'list',
     name: 'type',
     message: '请选择添加模版的类型',
-    default: TYPE_PROJECT,
-    choices: [
-      {
-        name: '项目',
-        value: TYPE_PROJECT,
-      },
-      {
-        name: '组件',
-        value: TYPE_COMPONENT,
-      },
-    ],
+    default: projectType['project'].code,
+    choices: projectType.getCustomOptions({ code: 'value', text: 'name' }),
   });
-  const title = type === TYPE_PROJECT ? '项目' : '组件';
+  const title = projectType.getTextByCode(type);
   const projectPrompt: any = [];
   projectPrompt.push({
     type: 'input',

@@ -30,7 +30,7 @@ export default {
     }),
     babel({ babelHelpers: 'bundled' }),
     commonjs(),
-    typescript({ compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es5' } }),
+    typescript({ compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es6' } }),
     json(),
     terser(),
   ],

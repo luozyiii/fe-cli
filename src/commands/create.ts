@@ -6,7 +6,8 @@ const fse = require('fs-extra');
 const axios = require('axios');
 import inquirer from 'inquirer';
 import { pathExistsSync } from 'path-exists';
-import { API_PATH, LOWEST_NODE_VERSION, TYPE_COMPONENT, TYPE_PROJECT } from '../common/constant';
+import { API_PATH, LOWEST_NODE_VERSION } from '../common/constant';
+import { projectType } from '../enum';
 import { downloadTemplate, log } from '../utils';
 
 // 模版选项数据处理
@@ -77,19 +78,10 @@ async function getProjectInfo(options) {
     type: 'list',
     name: 'type',
     message: '请选择初始化类型',
-    default: TYPE_PROJECT,
-    choices: [
-      {
-        name: '项目',
-        value: TYPE_PROJECT,
-      },
-      {
-        name: '组件',
-        value: TYPE_COMPONENT,
-      },
-    ],
+    default: projectType['project'].code,
+    choices: projectType.getCustomOptions({ code: 'value', text: 'name' }),
   });
-  const title = type === TYPE_PROJECT ? '项目' : '组件';
+  const title = projectType.getTextByCode(type);
   const projectNamePrompt = {
     type: 'input',
     name: 'projectName',
