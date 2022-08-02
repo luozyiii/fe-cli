@@ -1,3 +1,4 @@
+import { downloadTemplate } from './download';
 import log from './log';
 import npm from './npm';
 import request from './request';
@@ -32,4 +33,4 @@ function execAsync(command, args, options) {
   });
 }
 
-export { log, request, npm, spinner, isObject, sleep, exec, execAsync };
+export { log, request, npm, spinner, isObject, sleep, exec, execAsync, downloadTemplate };

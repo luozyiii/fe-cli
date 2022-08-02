@@ -4,12 +4,10 @@ const colors = require('colors');
 const fs = require('fs');
 const fse = require('fs-extra');
 const axios = require('axios');
-const download = require('download-git-repo');
-const cmd = require('node-cmd');
 import inquirer from 'inquirer';
 import { pathExistsSync } from 'path-exists';
 import { API_PATH, LOWEST_NODE_VERSION, TYPE_COMPONENT, TYPE_PROJECT } from '../common/constant';
-import { log, spinner } from '../utils';
+import { downloadTemplate, log } from '../utils';
 
 // 模版选项数据处理
 function createTemplateChoice(template) {
@@ -115,29 +113,6 @@ async function getProjectInfo(options) {
   if (!isProjectNameValid) {
     projectPrompt.push(projectNamePrompt);
   }
-  projectPrompt.push({
-    type: 'input',
-    name: 'projectVersion',
-    message: `请输入${title}版本号`,
-    default: '1.0.0',
-    validate: function (v) {
-      let done = this.async();
-      setTimeout(() => {
-        if (!semver.valid(v)) {
-          done('请输入合法的版本号');
-          return;
-        }
-        done(null, true);
-      }, 0);
-    },
-    filter: function (v) {
-      if (semver.valid(v)) {
-        return semver.valid(v);
-      } else {
-        return v;
-      }
-    },
-  });
   const newTemplate = options?.template.filter((template) => {
     return template.type === type;
   });
@@ -150,48 +125,15 @@ async function getProjectInfo(options) {
     message: `请选择${title}模板`,
     choices: createTemplateChoice(newTemplate),
   });
-  if (type === TYPE_PROJECT) {
-    // 2、获取项目基本信息
-    const project = await inquirer.prompt(projectPrompt);
-    projectInfo = {
-      ...projectInfo,
-      type,
-      ...project,
-    };
-  } else if (type === TYPE_COMPONENT) {
-    // 组件基本信息
-    const descriptionPrompt = {
-      type: 'input',
-      name: 'componentDescription',
-      message: '请输入组件的描述信息',
-      validate: function (v) {
-        let done = this.async();
-        setTimeout(() => {
-          if (!v) {
-            done('请输入组件的描述信息');
-            return;
-          }
-          done(null, true);
-        }, 0);
-      },
-    };
-    projectPrompt.push(descriptionPrompt);
-    // 2、获取组件基本信息
-    const component = await inquirer.prompt(projectPrompt);
-    projectInfo = {
-      ...projectInfo,
-      type,
-      ...component,
-    };
-  }
+  const project = await inquirer.prompt(projectPrompt);
+  projectInfo = {
+    ...projectInfo,
+    type,
+    ...project,
+  };
+
   if (projectInfo.projectName) {
     projectInfo.projectName = await require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
-  }
-  if (projectInfo.projectVersion) {
-    projectInfo.version = projectInfo.projectVersion;
-  }
-  if (projectInfo.componentDescription) {
-    projectInfo.description = projectInfo.componentDescription;
   }
   return projectInfo;
 }
@@ -211,16 +153,8 @@ const createCommand = async (options: any) => {
       ...options,
     });
     // 4.拉取git 仓库, 并删除仓库 .git
-    const loadingSpinner = spinner('正在下载模版');
-    download(`direct:${projectInfo.projectLink}`, projectInfo.projectName, { clone: true }, (err) => {
-      loadingSpinner.stop();
-      console.log('');
-      log.success('模板拉取成功');
-      const localPath = path.join(process.cwd(), projectInfo.projectName);
-      cmd.run(`cd ${localPath} && rm -rf .git`, (err, data, stderr) => {
-        if (!err) log.notice('.git 文件跟踪已删除');
-      });
-    });
+    const downloadPath = path.join(process.cwd(), projectInfo.projectName);
+    downloadTemplate(projectInfo.projectLink, downloadPath);
   } catch (error: any) {
     log.error(error.message);
   }
