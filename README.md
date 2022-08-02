@@ -8,11 +8,15 @@
 # 安装
 npm install -g @leslies/fe-cli
 
-# 创建项目
-fe create test-project
-
 # 添加模版
 fe add
+
+# 查看模板
+fe list
+
+# 创建项目
+# <project-name> ： 项目名称，中横线分割
+fe create <project-name>
 ```
 
 ## 目录结构
