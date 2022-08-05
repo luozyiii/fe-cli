@@ -1,12 +1,12 @@
 # fe-cli
 
-搭建适合自己的脚手架：实现项目初始化和项目自动化发布两大核心功能。
+搭建适合自己的脚手架：实现项目初始化和项目自动化发布(还在开发)两大核心功能。
 
 ## 命令
 
 ```bash
 # 安装
-npm install -g @leslies/fe-cli
+npm i @leslies/fe-cli -g
 
 # 添加模版
 fe add
@@ -14,8 +14,7 @@ fe add
 # 查看模板
 fe list
 
-# 创建项目
-# <project-name> ： 项目名称，中横线分割
+# 创建项目  <project-name> ： 项目名称，中横线分割
 fe create <project-name>
 ```
 
@@ -27,6 +26,12 @@ fe create <project-name>
 ├── bin                         # 脚手架入口
 ├── lib                         # 打包后源码
 ├── src # 源码目录
+│   ├── commands                # 命令实现
+│   │   ├── add.ts              # fe add 增加模板
+│   │   ├── create.ts           # fe create <project-name> 项目初始化
+│   │   └── list.ts             # fe list 查看模板
+│   ├── common                  # 公用
+│   ├── enum                    # 枚举值
 │   ├── utils                   # 工具函数
 │   ├── index.ts                # 入口
 │   └── main.ts                 # 主要逻辑
@@ -55,7 +60,7 @@ rollup.dev.config.js;
 
 vscode 需安装 eslint 和 prettierrc 插件
 
-- [eslint-config-allo](https://github.com/AlloyTeam/eslint-config-alloy#typescript)
+- [eslint-config-alloy](https://github.com/AlloyTeam/eslint-config-alloy#typescript)
 
 配置文件`.eslintrc.js`
 
