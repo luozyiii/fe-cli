@@ -1,0 +1,26 @@
+[
+  {
+    "name": "开发环境",
+    "enviroment": "dev",
+    "ssh": {
+      "host": "112.74.201.142",
+      "port": 22,
+      "username": "root",
+      "password": "***"
+    },
+    "romotePath": "/home/fe-test/dev",
+    "localPath": "./dist"
+  },
+  {
+    "name": "测试环境",
+    "enviroment": "test",
+    "ssh": {
+      "host": "112.74.201.142",
+      "port": 22,
+      "username": "root",
+      "password": "***"
+    },
+    "romotePath": "/home/fe-test/test",
+    "localPath": "./dist"
+  }
+]

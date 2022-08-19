@@ -1,5 +1,6 @@
 const DEFAULT_HOME = '.fe';
 const LOWEST_NODE_VERSION = '13.0.0';
 const API_PATH = 'http://112.74.201.142:7003';
+const DEPLOY_CONFIG_PATH = './deploy.config.json';
 
-export { DEFAULT_HOME, LOWEST_NODE_VERSION, API_PATH };
+export { DEFAULT_HOME, LOWEST_NODE_VERSION, API_PATH, DEPLOY_CONFIG_PATH };

@@ -42,6 +42,7 @@
     "path-exists": "^5.0.0",
     "root-check": "^2.0.0",
     "semver": "^7.3.7",
+    "ssh2-sftp-client": "^9.0.3",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
