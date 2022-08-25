@@ -2,11 +2,9 @@
 node_modules
 yarn.lock
 package-lock.json
-deploy.config.json
 
 # build
 lib
-dist
 
 # mac
 .DS_Store
