@@ -5,6 +5,7 @@ const fse = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
 const inquirer = require('inquirer');
+const shell = require('shelljs');
 let Client = require('ssh2-sftp-client');
 
 const configPath = path.resolve(process.cwd(), DEPLOY_CONFIG_PATH);
@@ -126,6 +127,14 @@ const deployCommand = async () => {
       choices: envOption,
     });
     const options = configOptions.find((item) => item.enviroment === env);
+    // 构建
+    if (options.cmd) {
+      log.notice(`执行构建命令：${options.cmd}`);
+      shell.exec(options.cmd, {
+        cwd: process.cwd(),
+      });
+      log.success(`构建成功！`);
+    }
     // 开始部署
     let sftp = new Client();
     let loadingSpinner: any = null;

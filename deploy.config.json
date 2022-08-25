@@ -8,8 +8,9 @@
       "username": "root",
       "password": "***"
     },
+    "cmd": "npm run build",
     "romotePath": "/home/fe-test/dev",
-    "localPath": "./dist"
+    "localPath": "./lib"
   },
   {
     "name": "测试环境",
