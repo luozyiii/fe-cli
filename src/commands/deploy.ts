@@ -1,6 +1,6 @@
 import { DEPLOY_CONFIG_PATH } from '../common/constant';
 import { updateType } from '../enum';
-import { log, spinner } from '../utils';
+import { bytesToSize, log, spinner } from '../utils';
 const fse = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
@@ -18,7 +18,7 @@ const getContentHash = async (sftp, filePath) => {
 };
 
 const getRemoteFiles = async (sftp, homePath) => {
-  const list = [];
+  const list: any[] = [];
   async function getFiles(dirPath) {
     const dirListing = await sftp.list(dirPath);
     const tasks = dirListing.map(async (item) => {
@@ -44,13 +44,14 @@ const getRemoteFiles = async (sftp, homePath) => {
 
 // 部署前后文件差异
 const diffTable = (oldList, newList) => {
-  let list = [];
+  let list: any[] = [];
   // 全部都是新增的情况
   if (oldList.length === 0) {
     return newList.map((item) => {
-      const { md5, ...other } = item;
+      const { md5, size, ...other } = item;
       return {
         ...other,
+        size: bytesToSize(size),
         diff: '新增',
       };
     });
@@ -60,18 +61,22 @@ const diffTable = (oldList, newList) => {
     oldList.forEach((oldItem) => {
       if (newItem.path === oldItem.path) {
         if (newItem.md5 === oldItem.md5) {
-          const { md5, ...other } = newItem;
+          const { md5, size, ...other } = newItem;
           list.push({
             ...other,
+            size: bytesToSize(size),
             diff: '不变',
           });
         } else {
           const { md5: oldMd5, size: oldSize } = oldItem;
           const { md5, size, ...other } = newItem;
-          let diffText = size >= oldSize ? `变大: ${oldSize} => ${size}` : `变小: ${oldSize} => ${size}`;
+          let diffText =
+            size >= oldSize
+              ? `变大: ${bytesToSize(oldSize)} => ${bytesToSize(size)}`
+              : `变小: ${bytesToSize(oldSize)} => ${bytesToSize(size)}`;
           list.push({
             ...other,
-            size,
+            size: bytesToSize(size),
             diff: diffText,
           });
         }
@@ -82,9 +87,10 @@ const diffTable = (oldList, newList) => {
   // 部分新增
   newList.forEach((item) => {
     if (!diffListPath.includes(item.path)) {
-      const { md5, ...other } = item;
+      const { md5, size, ...other } = item;
       list.push({
         ...other,
+        size: bytesToSize(size),
         diff: '新增',
       });
     }
@@ -92,9 +98,10 @@ const diffTable = (oldList, newList) => {
   // 部分删除
   oldList.forEach((item) => {
     if (!diffListPath.includes(item.path)) {
-      const { md5, ...other } = item;
+      const { md5, size, ...other } = item;
       list.push({
         ...other,
+        size: bytesToSize(size),
         diff: '删除',
       });
     }
@@ -104,7 +111,7 @@ const diffTable = (oldList, newList) => {
 
 const deployCommand = async () => {
   try {
-    const configOptions = fse.readJsonSync(configPath);
+    const configOptions = await fse.readJson(configPath);
     const envOption = configOptions.map((item) => {
       return {
         value: item.enviroment,
@@ -122,8 +129,8 @@ const deployCommand = async () => {
     // 开始部署
     let sftp = new Client();
     let loadingSpinner: any = null;
-    let oldFiles = [];
-    let newFiles = [];
+    let oldFiles: any[] = [];
+    let newFiles: any[] = [];
     sftp
       .connect(options.ssh)
       .then(async () => {
