@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.2.3](https://github.com/luozyiii/fe-cli/compare/release_v0.2.2...release_v0.2.3) (2022-09-07)
+
 ## [0.2.2](https://github.com/luozyiii/fe-cli/compare/release_v0.2.1...release_v0.2.2) (2022-09-07)
 
 
