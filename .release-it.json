@@ -8,11 +8,9 @@
   },
   "plugins": {
     "@release-it/conventional-changelog": {
+      "preset": "angular",
       "infile": "CHANGELOG.md",
-      "header": "# Changelog",
-      "preset": {
-        "name": "conventionalcommits"
-      }
+      "header": "# Changelog"
     }
   }
 }
