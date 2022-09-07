@@ -9,10 +9,9 @@
   "scripts": {
     "dev": "rm -rf lib && rollup -wc rollup.dev.config.js",
     "build": "rm -rf lib && rollup -c rollup.config.js",
-    "release:npm": "npm run build && npm publish",
+    "release": "release-it",
     "prepare": "husky install",
-    "lint": "lint-staged",
-    "release": "release-it"
+    "lint": "lint-staged"
   },
   "repository": {
     "type": "git",
