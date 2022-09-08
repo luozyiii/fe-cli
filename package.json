@@ -1,6 +1,6 @@
 {
   "name": "@leslies/fe-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "简单优雅的前端脚手架: 提高前端的研发效能",
   "main": "index.js",
   "bin": {
