@@ -167,13 +167,13 @@ npm i release-it @release-it/conventional-changelog --save-dev
 
 # 常用命令
 # major 1.0.0 => 1.0.1
-npm run release --major
+npm run release -- major
 
 # minor 1.0.0 => 1.1.0
-npm run release --minor
+npm run release -- minor
 
 # patch 1.0.0 => 2.0.0
-npm run release --patch
+npm run release -- patch
 ```
 
 ## 感谢支持
