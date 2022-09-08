@@ -1,5 +1,12 @@
 
 
+## [1.0.1](https://github.com/luozyiii/fe-cli/compare/v1.0.0...v1.0.1) (2022-09-08)
+
+
+### Bug Fixes
+
+* 依赖整理 ([06108b5](https://github.com/luozyiii/fe-cli/commit/06108b5d7885463c552d7d529943505fbd3b7b14))
+
 ## 1.0.0 (2022-09-07)
 
 
