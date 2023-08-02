@@ -14,7 +14,6 @@ async function getNpmInfo(npmName: string, registry?: string) {
     const res = await axios.get(npmInfoUrl);
     return res?.data;
   } catch (error) {
-    console.log('error', error);
     return false;
   }
 }
