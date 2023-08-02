@@ -1,5 +1,12 @@
 
 
+## [1.0.3](https://github.com/luozyiii/fe-cli/compare/v1.0.2...v1.0.3) (2023-08-02)
+
+
+### Features
+
+* 更新接口地址 ([af1f1c4](https://github.com/luozyiii/fe-cli/commit/af1f1c4763cc4315d66279e7a39b13a3d1aad56c))
+
 ## [1.0.2](https://github.com/luozyiii/fe-cli/compare/v1.0.1...v1.0.2) (2022-09-08)
 
 ## [1.0.1](https://github.com/luozyiii/fe-cli/compare/v1.0.0...v1.0.1) (2022-09-08)
