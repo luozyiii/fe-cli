@@ -1,5 +1,12 @@
 
 
+## [1.1.0](https://github.com/luozyiii/fe-cli/compare/v1.0.3...v1.1.0) (2023-08-02)
+
+
+### Features
+
+* 整理文档，正式发布 ([fa4b29e](https://github.com/luozyiii/fe-cli/commit/fa4b29e14e87985ec23202a055c1ba591a65340e))
+
 ## [1.0.3](https://github.com/luozyiii/fe-cli/compare/v1.0.2...v1.0.3) (2023-08-02)
 
 
