@@ -1,13 +1,5 @@
 # 简单优雅的前端脚手架 fe-cli
 
-## 目标：提高前端的研发效能
-
-- 前端研发核心流程：项目初始化 => 研发阶段 => 测试环境（发布） => 生产环境
-- 核心：人为操作 => 流程标准化（简单的说就是自动化）
-- 项目初始化流程的标准化：提供统一的模版选择 => 初始化项目(代码风格的标准化/commit 标准化/npm run release)
-- 测试环境发布流程的标准化：选择发布环境 => 部署过程 => 成功 => 生成部署前后文件差异日志
-- 生产环境发布流程的标准化： 项目里使用 npm release-it , 配置 .release-it.json； github 上配置 tag 触发自动构建。
-
 ## 使用
 
 ```bash
@@ -123,49 +115,11 @@ fe success 部署前后文件差异!!!
 fe success 开发环境部署成功!
 ```
 
-### 正式环境标准化发布流程
+## 发布
 
-思路：代码合并到 mian 主分支 => 借助 release-it 自动打 tag，生成 CHANGELOG.md, => github 仓库上配置 tag 触发构建
+借助 release-it 自动打 tag，生成 CHANGELOG.md, => github 仓库上配置 tag => 发布到 npm
 
 ```bash
-# tag自动化：建议在模版上做好这一步
-# 安装依赖
-npm i release-it @release-it/conventional-changelog --save-dev
-# 项目根目录 新建 .release-it.json
-{
-  "git": {
-    "commitMessage": "chore: release v${version}",
-    "tagName": "v${version}"
-  },
-  "github": {
-    "release": true
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "infile": "CHANGELOG.md",
-      "preset": {
-        "name": "conventionalcommits",
-        "types": [
-          {
-            "type": "feat",
-            "section": "Features"
-          },
-          {
-            "type": "fix",
-            "section": "Bug Fixes"
-          },
-          {}
-        ]
-      }
-    }
-  }
-}
-# 配置脚本 package.json
-"scripts": {
-  "release": "release-it",
-},
-
-# 常用命令
 # patch 1.0.0 => 1.0.1
 npm run release -- patch
 
@@ -178,6 +132,6 @@ npm run release -- major
 
 ## 感谢支持
 
-##### [Github](https://github.com/luozyiii/fe-cli)
+### [Github](https://github.com/luozyiii/fe-cli)
 
-##### [npm](https://www.npmjs.com/package/@leslies/fe-cli)
+### [npm](https://www.npmjs.com/package/@leslies/fe-cli)

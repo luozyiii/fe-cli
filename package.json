@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "rm -rf lib && rollup -wc rollup.dev.config.js",
     "build": "rm -rf lib && rollup -c rollup.config.js",
-    "release": "release-it",
+    "release": "npm run build && release-it",
     "prepare": "husky install",
     "lint": "lint-staged"
   },
@@ -20,7 +20,7 @@
   "keywords": [
     "fe-cli"
   ],
-  "author": "",
+  "author": "Leslie(924361501@qq.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/luozyiii/fe-cli/issues"

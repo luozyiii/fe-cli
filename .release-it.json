@@ -20,7 +20,10 @@
             "type": "fix",
             "section": "Bug Fixes"
           },
-          {}
+          {
+            "type": "docs",
+            "section": "docs"
+          }
         ]
       }
     }
