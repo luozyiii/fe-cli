@@ -1,5 +1,12 @@
 
 
+## [1.2.0](https://github.com/luozyiii/fe-cli/compare/v1.1.1...v1.2.0) (2023-08-04)
+
+
+### Features
+
+* 服务接口地址替换【之前版本的作废】 ([f9282a6](https://github.com/luozyiii/fe-cli/commit/f9282a69ea67c83c785eb5c9236686c2f17caa42))
+
 ## [1.1.1](https://github.com/luozyiii/fe-cli/compare/v1.1.0...v1.1.1) (2023-08-02)
 
 ## [1.1.0](https://github.com/luozyiii/fe-cli/compare/v1.0.3...v1.1.0) (2023-08-02)
