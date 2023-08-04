@@ -51,7 +51,7 @@ async function prepare() {
 
 const addTemplate = async (info) => {
   try {
-    const { data } = await axios.post(`${API_PATH}/add`, {
+    const { data } = await axios.post(`${API_PATH}/template/add`, {
       name: info?.projectName,
       url: info?.projectUrl,
       type: info?.projectType,

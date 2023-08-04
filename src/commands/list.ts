@@ -5,7 +5,7 @@ import { projectType } from '../enum';
 
 const listCommand = async () => {
   try {
-    const { data } = await axios.get(`${API_PATH}/list`);
+    const { data } = await axios.get(`${API_PATH}/template/list`);
     const projectListText = data?.data
       .map((item) => `${clc.cyan(`【${projectType.getTextByCode(item.type)}】${item.name}`)}`)
       .join('\n');

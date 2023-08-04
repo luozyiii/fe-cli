@@ -56,7 +56,7 @@ async function prepare(options) {
 
 async function getProjectTemplate() {
   try {
-    const { data } = await axios.get(`${API_PATH}/list`);
+    const { data } = await axios.get(`${API_PATH}/template/list`);
     return data?.data;
   } catch (error) {
     return [];
