@@ -1,23 +1,4 @@
-# 简单优雅的前端脚手架 fe-cli
-
-## 使用
-
-```bash
-# 安装
-npm i @leslies/fe-cli -g
-
-# 添加模版
-fe add
-
-# 查看模板
-fe list
-
-# 创建项目  <project-name> ： 项目名称，中横线分割
-fe create <project-name>
-
-# 发布 开发/测试环境
-fe deploy
-```
+# Rust 重构 fe-cli 脚手架
 
 ### fe create <project-name>
 

@@ -1,10 +1,1 @@
-# dependencies
-node_modules
-yarn.lock
-package-lock.json
-
-# build
-lib
-
-# mac
-.DS_Store
+/target
