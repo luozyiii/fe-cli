@@ -247,6 +247,8 @@ dependencies = [
  "git2",
  "indicatif",
  "reqwest",
+ "serde",
+ "serde_json",
  "tokio",
 ]
 

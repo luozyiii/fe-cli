@@ -42,7 +42,7 @@ fn main() {
     }
 
     if matches.subcommand_matches("list").is_some() {
-        list_fun();
+        let _ = list_fun();
     }
 
     if let Some(matches) =  matches.subcommand_matches("new") {

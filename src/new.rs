@@ -1,7 +1,6 @@
 use dialoguer::{theme::ColorfulTheme, Select};
 use git2::Repository;
 use std::fs;
-use indicatif::{ProgressBar, ProgressStyle};
 
 struct OptionProps {
     label: &'static str,
