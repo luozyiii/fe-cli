@@ -48,6 +48,6 @@ fn main() {
     if let Some(matches) =  matches.subcommand_matches("new") {
         let project_name = matches.value_of("project_name").unwrap();
         println!("new a project: {}", project_name);
-        new_project();
+        new_project(&project_name);
     }
 }

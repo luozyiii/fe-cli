@@ -8,7 +8,7 @@ struct OptionProps {
     value: &'static str,
 }
 
-pub fn new_project() {
+pub fn new_project(project_name: &str) {
     let raw_options = vec![
         OptionProps {label: "NestJS 模版", value: "https://github.com/luozyiii/nest-best"},
         OptionProps {label: "vite-antd-pc 模版", value: "https://github.com/luozyiii/vite-antd-pc"},
@@ -24,17 +24,10 @@ pub fn new_project() {
         .unwrap();
 
     let selected_value = raw_options[selection].value;
-    println!("选择的值: {}", selected_value);
+    // println!("选择的值: {}", selected_value);
 
-    let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_style(
-        ProgressStyle::default_spinner()
-            .template("{spinner:.green} Cloning {wide_msg}").expect("REASON")
-            .tick_strings(&["⠁", "⠂", "⠄", "⡀", "⢀", "⠠", "⠐", "⠈"])
-    );
-    progress_bar.set_message("Waiting...");
-
-    let repo = match Repository::clone(selected_value, "./test") {
+    println!("正在下载模版...");
+    let repo = match Repository::clone(selected_value, "./".to_owned() + project_name) {
         Ok(repo) => repo,
         Err(e) => {
             eprintln!("Failed to clone: {}", e);
@@ -42,12 +35,10 @@ pub fn new_project() {
         }
     };
 
-    progress_bar.finish_and_clear();
-
-    if let Err(e) = fs::remove_dir_all(repo.path().join(".git")) {
+    if let Err(e) = fs::remove_dir_all(repo.path()) {
         eprintln!("Failed to remove .git directory: {}", e);
         return;
     }
 
-    println!("项目初始化完成！");
+    println!("模板下载成功，项目初始化完成！");
 }
