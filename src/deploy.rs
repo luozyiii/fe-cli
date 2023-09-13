@@ -80,7 +80,7 @@ struct Config {
 }
 
 fn read_config_from_file() -> Result<Config, Box<dyn std::error::Error>> {
-    let config_file = File::open("deploy.json")?;
+    let config_file = File::open("deploy.config.json")?;
     let config: Config = serde_json::from_reader(config_file)?;
     Ok(config)
 }

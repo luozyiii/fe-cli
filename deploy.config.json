@@ -2,7 +2,7 @@
     "server_address": "81.71.98.176:22",
     "username": "root",
     "password": "123456",
-    "local_dir": "./project-name",
+    "local_dir": "./test",
     "remote_dir": "/root/rust-test"
 }
   
