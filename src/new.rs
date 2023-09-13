@@ -1,10 +1,10 @@
-use reqwest::Error;
-use dialoguer::{theme::ColorfulTheme, Select};
-use serde::{Deserialize, Serialize};
-use git2::Repository;
-use std::fs;
 use colored::*;
+use dialoguer::{theme::ColorfulTheme, Select};
+use git2::Repository;
+use reqwest::Error;
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use std::fs;
 
 struct TemplateTypeProps {
     value: String,
@@ -35,7 +35,10 @@ pub async fn new_fn(project_name: &str) {
         },
     ];
 
-    let tmp_options: Vec<&str> = template_type_options.iter().map(|obj| obj.label.as_str()).collect();
+    let tmp_options: Vec<&str> = template_type_options
+        .iter()
+        .map(|obj| obj.label.as_str())
+        .collect();
 
     let tmp_selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("请选择模版类型")
@@ -43,7 +46,7 @@ pub async fn new_fn(project_name: &str) {
         .items(&tmp_options)
         .interact()
         .unwrap();
-    
+
     let tmp_type = &template_type_options[tmp_selection].value;
 
     let mut template_options = vec![];
@@ -52,7 +55,11 @@ pub async fn new_fn(project_name: &str) {
         template_options = data
     }
 
-    let options: Vec<&str> = template_options.iter().filter(|&x| x.type_ == tmp_type.as_str()).map(|obj| obj.name.as_str()).collect();
+    let options: Vec<&str> = template_options
+        .iter()
+        .filter(|&x| x.type_ == tmp_type.as_str())
+        .map(|obj| obj.name.as_str())
+        .collect();
 
     let tmp = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("请选择模板")
@@ -65,17 +72,16 @@ pub async fn new_fn(project_name: &str) {
 
     println!("正在下载模版...");
 
-    
     let repo = match Repository::clone(select_key.as_str(), format!("./{}", project_name)) {
         Ok(repo) => repo,
         Err(e) => {
-            eprintln!("Failed to clone: {}", e);
+            eprintln!("模版下载失败: {}", e);
             return;
         }
     };
 
     if let Err(e) = fs::remove_dir_all(repo.path()) {
-        eprintln!("Failed to remove .git directory: {}", e);
+        eprintln!("根目录.git文件夹删除失败: {}", e);
         return;
     }
 
@@ -93,7 +99,9 @@ async fn get_template() -> Result<Vec<Template>, Error> {
                 if let Some(template_arr) = data.as_array() {
                     let mut templates = Vec::new();
                     for template in template_arr {
-                        if let Ok(template_data) = serde_json::from_value::<Template>(template.clone()) {
+                        if let Ok(template_data) =
+                            serde_json::from_value::<Template>(template.clone())
+                        {
                             templates.push(template_data);
                         }
                     }

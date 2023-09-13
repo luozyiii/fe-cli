@@ -1,7 +1,7 @@
+use colored::*;
 use reqwest::Error;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use colored::*;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Template {
@@ -20,12 +20,14 @@ pub async fn list_fn() -> Result<(), Error> {
             if let Some(data) = json.get("data") {
                 if let Some(template_array) = data.as_array() {
                     for template in template_array {
-                        if let Ok(template_data) = serde_json::from_value::<Template>(template.clone()) {
+                        if let Ok(template_data) =
+                            serde_json::from_value::<Template>(template.clone())
+                        {
                             let colored_name = format!("{}", template_data.name).white();
                             let colored_type = match template_data.type_.as_str() {
-                                "project" => "【项目】".blue(),
-                                "component" => "【组件】".blue(),
-                                _ => "【其他】".blue(),
+                                "project" => "【项目】".green(),
+                                "component" => "【组件】".green(),
+                                _ => "【其他】".green(),
                             };
                             println!("{}{}", colored_type, colored_name);
                         }
@@ -38,6 +40,6 @@ pub async fn list_fn() -> Result<(), Error> {
     } else {
         println!("请求失败，状态码: {:?}", response.status());
     }
-    
+
     Ok(())
 }

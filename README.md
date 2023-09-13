@@ -1,4 +1,5 @@
 # Rust 重构 fe-cli 脚手架
+
 简单优雅的前端脚手架: 提高前端的研发效能
 
 ### fe new <project-name>
@@ -48,7 +49,7 @@ fe info v1.0.0
 【项目】pc 项目
 ```
 
-### fe deploy 发布(建议只用于发布开发/测试环境)
+### fe deploy 发布(建议只用于发布开发/测试环境) ssh2
 
 待开发
 
@@ -102,11 +103,29 @@ fe success 开发环境部署成功!
 
 待开发
 
+## rust 代码规范
+
+```bash
+# 安装 vscode-rustfmt 插件
+```
+
+```json
+// .vscode/settings.json
+{
+  "[rust]": {
+    "editor.defaultFormatter": "statiolake.vscode-rustfmt",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  }
+}
+```
+
 ## 资料
 
 - [rust](https://www.rust-lang.org/learn)
 - [crates](https://crates.io/)
 - [15 分钟创建一个命令行程序](https://rust-cli.github.io/book/tutorial/index.html)
+- [rust clap 学习](https://blog.csdn.net/yhb_csdn/article/details/131162434)
 
 ## 感谢支持
 

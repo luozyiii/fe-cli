@@ -1,0 +1,7 @@
+{
+  "[rust]": {
+    "editor.defaultFormatter": "statiolake.vscode-rustfmt",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  }
+}

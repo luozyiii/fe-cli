@@ -1,7 +1,7 @@
-use dialoguer::{theme::ColorfulTheme, Select, Input};
+use colored::*;
+use dialoguer::{theme::ColorfulTheme, Input, Select};
 use reqwest::Client;
 use serde_json::json;
-use colored::*;
 
 struct TemplateTypeProps {
     value: String,
@@ -16,7 +16,6 @@ pub struct TemplateProps {
 }
 
 pub async fn add_fn() {
-
     let template_type_options = vec![
         TemplateTypeProps {
             value: "project".to_string(),
@@ -31,8 +30,11 @@ pub async fn add_fn() {
             label: "其他".to_string(),
         },
     ];
-    
-    let options: Vec<&str> = template_type_options.iter().map(|obj| obj.label.as_str()).collect();
+
+    let options: Vec<&str> = template_type_options
+        .iter()
+        .map(|obj| obj.label.as_str())
+        .collect();
 
     let selection = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("请选择模版类型")
@@ -45,12 +47,12 @@ pub async fn add_fn() {
 
     let name: String = Input::new()
         .with_prompt("请填写模版名称")
-        .interact_text()
+        .interact()
         .unwrap();
 
     let url: String = Input::new()
         .with_prompt("请填写模版git地址")
-        .interact_text()
+        .interact()
         .unwrap();
 
     let template = TemplateProps {
@@ -64,9 +66,7 @@ pub async fn add_fn() {
     }
 }
 
-
 pub async fn save_template(template: &TemplateProps) -> Result<(), reqwest::Error> {
-
     let client = Client::new();
     let url = "http://81.71.98.176:3000/template/add";
 
