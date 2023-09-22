@@ -90,8 +90,18 @@ fe info v1.3.0
 ```
 
 ## 发布
+```bash
+# https://crates.io/settings/tokens
+# new token
+cargo login token
 
-待开发
+cargo build
+
+cargo doc --no-deps
+
+cargo publish
+
+```
 
 ## rust 代码规范
 
