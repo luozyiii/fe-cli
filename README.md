@@ -1,16 +1,16 @@
-# Rust 重构 fe-cli 脚手架
+# Rust 重构 fe-cli 脚手架 - femaker
 
 简单优雅的前端脚手架: 提高前端的研发效能
 
-### fe new <project-name>
+### femaker new <project-name>
 
 项目初始化的标准流程：
 
 ```bash
 # 初始化 demo 项目
-fe new demo
+femaker new demo
 
-fe info v1.0.0
+femaker info v1.0.0
 ✔ 请选择模版类型 · 项目
 ✔ 请选择模板 · antd
 正在下载模版...
@@ -27,32 +27,32 @@ git push -u origin main # 强制推送
 
 ```
 
-### fe add 添加模版
+### femaker add 添加模版
 
-将平时喜欢的项目模版添加到 fe 脚手架(仅支持 git 仓库)
+将平时喜欢的项目模版添加到 femaker 脚手架(仅支持 git 仓库)
 
 ```bash
-fe add
+femaker add
 
-fe info v1.0.0
+femaker info v1.0.0
 ✔ 请选择模版类型 · 项目
 请填写模版名称: Taro小程序模版
 请填写模版git地址: https://github.com/luozyiii/taro-app.git
 模板添加成功！
 ```
 
-### fe list 查看模版
+### femaker list 查看模版
 
 ```bash
-fe list
+femaker list
 
-fe info v1.0.0
+femaker info v1.0.0
 【项目】Taro小程序模板
 【组件】小程序表单组件
 【项目】pc 项目
 ```
 
-### fe deploy 发布(建议只用于发布开发/测试环境)
+### femaker deploy 发布(建议只用于发布开发/测试环境)
 
 ```bash
 # 1、在项目根目录配置deploy.config.json; 标准格式如下
@@ -76,10 +76,10 @@ fe info v1.0.0
 ]
 
 
-# 2、在项目根目录执行 fe deploy
-fe deploy
+# 2、在项目根目录执行 femaker deploy
+femaker deploy
 
-fe info v1.3.0
+femaker info v1.3.0
 ✔ 请选择部署环境 · 测试环境
 开始部署...
 创建远程目录: "/root/rust-test"
@@ -129,4 +129,4 @@ cargo publish
 
 ## 感谢支持
 
-- [Github](https://github.com/luozyiii/fe-cli)
+- [Github](https://github.com/luozyiii/femaker-cli)
