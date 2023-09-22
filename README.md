@@ -9,6 +9,7 @@
 ```bash
 # 初始化 demo 项目
 fe new demo
+
 fe info v1.0.0
 ✔ 请选择模版类型 · 项目
 ✔ 请选择模板 · antd
@@ -32,6 +33,7 @@ git push -u origin main # 强制推送
 
 ```bash
 fe add
+
 fe info v1.0.0
 ✔ 请选择模版类型 · 项目
 请填写模版名称: Taro小程序模版
@@ -43,60 +45,48 @@ fe info v1.0.0
 
 ```bash
 fe list
+
 fe info v1.0.0
 【项目】Taro小程序模板
 【组件】小程序表单组件
 【项目】pc 项目
 ```
 
-### fe deploy 发布(建议只用于发布开发/测试环境) ssh2
-
-待开发
+### fe deploy 发布(建议只用于发布开发/测试环境)
 
 ```bash
 # 1、在项目根目录配置deploy.config.json; 标准格式如下
 [
   {
     "name": "开发环境",
-    "enviroment": "dev",
-    "ssh": {
-      "host": "112.74.201.142",
-      "port": 22,
-      "username": "root",
-      "password": "***"
-    },
-    "cmd": "npm run build",
-    "romotePath": "/home/fe-test/dev",
-    "localPath": "./lib"
+    "server_address": "81.71.98.176:22",
+    "username": "root",
+    "password": "***",
+    "local_dir": "./test",
+    "remote_dir": "/root/rust-test"
   },
   {
     "name": "测试环境",
-    "enviroment": "test",
-    "ssh": {
-      "host": "112.74.201.142",
-      "port": 22,
-      "username": "root",
-      "password": "***"
-    },
-    "romotePath": "/home/fe-test/test",
-    "localPath": "./dist"
+    "server_address": "81.71.98.176:22",
+    "username": "root",
+    "password": "***",
+    "local_dir": "./test",
+    "remote_dir": "/root/rust-test"
   }
 ]
 
+
 # 2、在项目根目录执行 fe deploy
-luozhiyi@luozhiyideMacBook-Pro: ~/Work/project/fe-cli (git::main)$fe deploy
-fe info v1.0.1
-? 请选择部署的环境 开发环境
-? 远程目录存在，请选择更新类型 覆盖更新
-fe notice 远程目录清理完毕!
-正在部署... -
-fe success 部署前后文件差异!!!
-┌─────────┬────────────┬──────────────────────────────┬─────────────┬────────────────────────────────┐
-│ (index) │    name    │             path             │    size     │              diff              │
-├─────────┼────────────┼──────────────────────────────┼─────────────┼────────────────────────────────┤
-│    0    │ 'index.js' │ '/home/fe-test/dev/index.js' │ '845.45 KB' │ '变小: 895.65 KB => 845.45 KB' │
-└─────────┴────────────┴──────────────────────────────┴─────────────┴────────────────────────────────┘
-fe success 开发环境部署成功!
+fe deploy
+
+fe info v1.3.0
+✔ 请选择部署环境 · 测试环境
+开始部署...
+创建远程目录: "/root/rust-test"
+创建远程目录: "/root/rust-test/abc"
+上传文件: "/root/rust-test/abc/1.txt"
+上传文件: "/root/rust-test/2.txt"
+部署成功！
 ```
 
 ## 发布
