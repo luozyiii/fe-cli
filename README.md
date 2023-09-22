@@ -32,7 +32,7 @@ femaker
 # 初始化 demo 项目
 femaker new demo
 
-femaker info v1.0.0
+femaker info v0.1.1
 ✔ 请选择模版类型 · 项目
 ✔ 请选择模板 · antd
 正在下载模版...
@@ -56,7 +56,7 @@ git push -u origin main # 强制推送
 ```bash
 femaker add
 
-femaker info v1.0.0
+femaker info v0.1.1
 ✔ 请选择模版类型 · 项目
 请填写模版名称: Taro小程序模版
 请填写模版git地址: https://github.com/luozyiii/taro-app.git
@@ -68,7 +68,7 @@ femaker info v1.0.0
 ```bash
 femaker list
 
-femaker info v1.0.0
+femaker info v0.1.1
 【项目】Taro小程序模板
 【组件】小程序表单组件
 【项目】pc 项目
@@ -101,7 +101,7 @@ femaker info v1.0.0
 # 2、在项目根目录执行 femaker deploy
 femaker deploy
 
-femaker info v1.3.0
+femaker info v0.1.1
 ✔ 请选择部署环境 · 测试环境
 开始部署...
 创建远程目录: "/root/rust-test"
