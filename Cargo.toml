@@ -3,7 +3,6 @@ name = "fe"
 authors = ["leslie"]
 version = "0.1.0"
 edition = "2021"
-keywords = ["简单优雅", "前端脚手架", "提效"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
