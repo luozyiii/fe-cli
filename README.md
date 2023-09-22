@@ -1,6 +1,28 @@
-# Rust 重构 fe-cli 脚手架 - femaker
+# 前端脚手架 - femaker
 
-简单优雅的前端脚手架: 提高前端的研发效能
+rust重构fe-cli, 重命名为 femaker; 
+
+### 特点
+- 简单优雅
+- 提高前端的研发效能
+- 速度快
+
+### 安装
+```bash
+cargo install femaker
+
+# 注意
+# 使用以下命令将 Rust 的二进制目录添加到你的 PATH
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc  # 如果你使用的是 Bash
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc   # 如果你使用的是 Zsh
+
+# 更新当前终端会话中的 PATH：
+source ~/.bashrc  # 如果你使用的是 Bash
+source ~/.zshrc   # 如果你使用的是 Zsh
+
+# 命令行直接运行
+femaker
+```
 
 ### femaker new <project-name>
 
