@@ -1,15 +1,8 @@
 use clap::{Parser, Subcommand};
-use colored::*;
-use tokio;
+use colored::Colorize;
 
-mod add;
-use add::add_fn;
-mod list;
-use list::list_fn;
-mod new;
-use new::new_fn;
-mod deploy;
-use deploy::deploy_fn;
+// 使用 lib.rs 中的模块
+use femaker::{add_command, deploy_command, list_command, new_command};
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -31,23 +24,21 @@ enum Commands {
 async fn main() {
     let version = env!("CARGO_PKG_VERSION");
     let name = env!("CARGO_PKG_NAME");
-    let info = format!("{} v{}", name, version);
+    let info = format!("{name} v{version}");
     println!("{}", info.yellow());
 
     // 主流程
     let cli = Cli::parse();
-    match &cli.command {
-        Commands::Add => {
-            let _ = add_fn().await;
-        }
-        Commands::List => {
-            let _ = list_fn().await;
-        }
-        Commands::New { project_name } => {
-            let _ = new_fn(&project_name).await;
-        }
-        Commands::Deploy => {
-            deploy_fn();
-        }
+    let result = match &cli.command {
+        Commands::Add => add_command().await,
+        Commands::List => list_command().await,
+        Commands::New { project_name } => new_command(project_name).await,
+        Commands::Deploy => deploy_command().await,
+    };
+
+    // 统一错误处理
+    if let Err(e) = result {
+        eprintln!("{}", format!("错误: {e}").red());
+        std::process::exit(1);
     }
 }
