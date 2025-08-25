@@ -1,75 +1,101 @@
-# 前端脚手架 - femaker
+# FeMaker - 前端脚手架工具
 
-rust重构fe-cli, 重命名为 femaker; 
+[![Crates.io](https://img.shields.io/crates/v/femaker.svg)](https://crates.io/crates/femaker)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### 特点
-- 简单优雅
-- 提高前端的研发效能
-- 速度快
+FeMaker 是一个使用 Rust 开发的现代化前端脚手架工具，专为提升前端开发效率而设计。它提供了项目模板管理、快速项目初始化和自动化部署等功能。
 
-### 安装
+## ✨ 特性
+
+- 🚀 **高性能**: 基于 Rust 开发，启动速度快，运行效率高
+- 🎯 **简单易用**: 交互式命令行界面，操作直观便捷
+- 📦 **模板管理**: 支持项目、组件、工具库等多种类型模板
+- 🔄 **动态模板**: 从远程服务器获取最新模板列表
+- 🚀 **一键部署**: 支持多环境配置的自动化部署
+- 🛠️ **可扩展**: 支持自定义模板添加
+
+## 📦 安装
+
+### 通过 Cargo 安装（推荐）
+
 ```bash
 cargo install femaker
-
-# 注意
-# 使用以下命令将 Rust 的二进制目录添加到你的 PATH
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc  # 如果你使用的是 Bash
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc   # 如果你使用的是 Zsh
-
-# 更新当前终端会话中的 PATH：
-source ~/.bashrc  # 如果你使用的是 Bash
-source ~/.zshrc   # 如果你使用的是 Zsh
-
-# 命令行直接运行
-femaker
 ```
 
-### femaker new <project-name>
+### 环境配置
 
-项目初始化的标准流程：
+安装完成后，确保 Rust 的二进制目录在你的 PATH 中：
 
 ```bash
-# 初始化 demo 项目
-femaker new demo
+# Bash 用户
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 
+# Zsh 用户
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# 验证安装
+femaker --version
+```
+
+## 🚀 快速开始
+
+### 创建新项目
+
+使用 `femaker new` 命令快速创建新项目：
+
+```bash
+femaker new my-project
+```
+
+执行后会出现交互式选择界面：
+
+```
 femaker v0.1.2
 ✔ 请选择模版类型 · 项目
-✔ 请选择模板 · antd
+✔ 请选择模板 · vite-antd-pc 管理后台
 正在下载模版...
 项目初始化完成！
-
-# 先创建远程仓库，然后 本地仓库与远程仓库关联
-cd demo
-git init
-git add .
-git commit -m "chore: first commit"
-git branch -M main # 主分支重命名为 main
-git remote add origin https://github.com/luozyiii/demo.git
-git push -u origin main # 强制推送
-
 ```
 
-### femaker add 添加模版
-
-将平时喜欢的项目模版添加到 femaker 脚手架(仅支持 git 仓库)
+### 项目初始化完整流程
 
 ```bash
-femaker add
+# 1. 创建项目
+femaker new my-project
 
-femaker v0.1.2
-✔ 请选择模版类型 · 项目
-请填写模版名称: taro 小程序模版
-请填写模版git地址: https://github.com/luozyiii/taro-app.git
-模板添加成功！
+# 2. 进入项目目录
+cd my-project
+
+# 3. 初始化 Git 仓库（可选）
+git init
+git add .
+git commit -m "feat: initial commit"
+
+# 4. 关联远程仓库（可选）
+git branch -M main
+git remote add origin https://github.com/username/my-project.git
+git push -u origin main
 ```
 
-### femaker list 查看模版
+## 📋 命令详解
+
+### `femaker new <project-name>`
+
+创建新项目，支持多种模板类型：
+- **项目模板**: 完整的前端项目脚手架
+- **组件模板**: 可复用的组件库模板
+- **工具模板**: 工具函数库等其他类型模板
+
+### `femaker list`
+
+查看所有可用的模板列表：
 
 ```bash
 femaker list
 
-femaker v0.1.2
-【项目】taro 小程序模版
+# 输出示例：
 【项目】vite-antd-pc 管理后台
 【项目】next-antd-pc 管理后台
 【项目】vite h5 基建项目模板
@@ -78,62 +104,98 @@ femaker v0.1.2
 【其他】基于rollup + typescript 封装常用的工具函数
 ```
 
-### femaker deploy 发布(建议只用于发布开发/测试环境)
+### `femaker add`
+
+添加自定义模板到脚手架（仅支持 Git 仓库）：
 
 ```bash
-# 1、在项目根目录配置deploy.config.json; 标准格式如下
+femaker add
+
+# 交互式添加流程：
+✔ 请选择模版类型 · 项目
+请填写模版名称: 我的自定义模板
+请填写模版git地址: https://github.com/username/my-template.git
+模板添加成功！
+```
+
+### `femaker deploy`
+
+自动化部署功能，支持多环境配置（建议仅用于开发/测试环境）。
+
+#### 配置部署环境
+
+在项目根目录创建 `deploy.config.json` 文件：
+
+```json
 [
   {
     "name": "开发环境",
-    "server_address": "81.71.98.176:22",
-    "username": "root",
-    "password": "***",
-    "local_dir": "./test",
-    "remote_dir": "/root/rust-test"
+    "server_address": "your-server:22",
+    "username": "your-username",
+    "password": "your-password",
+    "local_dir": "./dist",
+    "remote_dir": "/var/www/html"
   },
   {
     "name": "测试环境",
-    "server_address": "81.71.98.176:22",
-    "username": "root",
-    "password": "***",
-    "local_dir": "./test",
-    "remote_dir": "/root/rust-test"
+    "server_address": "test-server:22",
+    "username": "your-username",
+    "password": "your-password",
+    "local_dir": "./dist",
+    "remote_dir": "/var/www/test"
   }
 ]
+```
 
+#### 执行部署
 
-# 2、在项目根目录执行 femaker deploy
+```bash
 femaker deploy
 
-femaker v0.1.2
+# 交互式选择部署环境：
 ✔ 请选择部署环境 · 测试环境
 开始部署...
-创建远程目录: "/root/rust-test"
-创建远程目录: "/root/rust-test/abc"
-上传文件: "/root/rust-test/abc/1.txt"
-上传文件: "/root/rust-test/2.txt"
+创建远程目录: "/var/www/test"
+上传文件: "/var/www/test/index.html"
+上传文件: "/var/www/test/assets/main.js"
 部署成功！
 ```
 
-## 发布
-```bash
-# https://crates.io/settings/tokens
-# new token
-cargo login token
+> ⚠️ **安全提示**: 部署功能建议仅在开发和测试环境使用，生产环境建议使用更安全的 CI/CD 流程。
 
+## 🛠️ 技术栈
+
+FeMaker 基于以下技术构建：
+
+- **[Rust](https://www.rust-lang.org/)** - 系统编程语言，保证高性能和内存安全
+- **[Clap](https://clap.rs/)** - 命令行参数解析
+- **[Dialoguer](https://github.com/console-rs/dialoguer)** - 交互式命令行界面
+- **[Git2](https://github.com/rust-lang/git2-rs)** - Git 操作支持
+- **[Reqwest](https://github.com/seanmonstar/reqwest)** - HTTP 客户端
+- **[SSH2](https://github.com/alexcrichton/ssh2-rs)** - SSH 连接和文件传输
+
+## 🔧 开发指南
+
+### 本地开发
+
+```bash
+# 克隆项目
+git clone https://github.com/luozyiii/femaker-cli.git
+cd femaker-cli
+
+# 构建项目
 cargo build
 
-cargo doc --no-deps
+# 运行测试
+cargo test
 
-cargo publish
-
+# 本地安装
+cargo install --path .
 ```
 
-## rust 代码规范
+### 代码规范
 
-```bash
-# 安装 vscode-rustfmt 插件
-```
+项目使用 `rustfmt` 进行代码格式化，建议配置 VS Code：
 
 ```json
 // .vscode/settings.json
@@ -146,13 +208,42 @@ cargo publish
 }
 ```
 
-## 资料
+### 发布流程
 
-- [rust](https://www.rust-lang.org/learn)
-- [crates](https://crates.io/)
-- [15 分钟创建一个命令行程序](https://rust-cli.github.io/book/tutorial/index.html)
-- [rust clap 学习](https://blog.csdn.net/yhb_csdn/article/details/131162434)
+```bash
+# 1. 登录 crates.io (需要先在 https://crates.io/settings/tokens 获取 token)
+cargo login <your-token>
 
-## 感谢支持
+# 2. 构建项目
+cargo build --release
 
-- [Github](https://github.com/luozyiii/femaker-cli)
+# 3. 生成文档
+cargo doc --no-deps
+
+# 4. 发布到 crates.io
+cargo publish
+```
+
+## 📚 相关资源
+
+- [Rust 官方学习资源](https://www.rust-lang.org/learn)
+- [Crates.io 包管理](https://crates.io/)
+- [Rust CLI 开发指南](https://rust-cli.github.io/book/tutorial/index.html)
+- [Clap 命令行解析教程](https://docs.rs/clap/latest/clap/)
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📄 许可证
+
+本项目基于 [MIT 许可证](LICENSE) 开源。
+
+## 🔗 链接
+
+- [GitHub 仓库](https://github.com/luozyiii/femaker-cli)
+- [Crates.io 页面](https://crates.io/crates/femaker)
+
+---
+
+如果 FeMaker 对你有帮助，请给个 ⭐️ 支持一下！
